@@ -15,10 +15,13 @@
         private static string $scheme;
         private static string $scheme_version;
         private static bool $scheme_isSecure;
+        private static string $sub_domain;
         private static string $host;
         private static string $hosts;
         private static string $path;
         private static string $query;
+        private static bool $is_limit;
+        private static array $dump;
 
 
 
@@ -63,7 +66,14 @@
         }
 
 
+        
+        public static function sub_domain(): string
+        {
+           return self::$sub_domain ??= substr(self::hosts(), 0, strpos(self::hosts(), '.'.self::host(), 2));
+        }
+        
 
+        
         public static function host(): string 
         {
             return self::$host ??= $_SERVER['SERVER_NAME'];
@@ -96,7 +106,29 @@
 
         public static function isLimit(): bool
         {
-            return mb_strlen(self::uri()) > 256;
+            return self::$is_limit ??= mb_strlen(self::uri()) > 256;
+        }
+        
+        
+        
+        public static function dump(): array
+        {
+            return self::$dump ??= [
+                'URI' => self::uri(),
+                'FULL' => self::full(),
+                'PROTOCOL' => self::protocol(),
+                'SCHEME' => self::scheme(),
+                'SCHEME_VERSION' => self::scheme_version(),
+                'SCHEME_ISSECURE' => self::scheme_isSecure(),
+                'SUB_DOMAIN' => self::sub_domain(),
+                'HOST' => self::host(),
+                'HOSTS' => self::hosts(),
+                'PATH' => self::path(),
+                'QUERY' => self::query(),
+                'IS_LIMIT' => self::isLimit(),
+                'IS_LIMIT_SIZE' => 256,
+                'GENERATED_AT' => date('Y-m-d H:i:s')
+            ];
         }
     }
 ?>
