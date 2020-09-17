@@ -99,7 +99,7 @@
 
         public static function query(): string
         {
-            return self::$query ??= $_SERVER['QUERY_STRING'];
+            return self::$query ??= htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES, 'UTF-8');
         }
 
 
