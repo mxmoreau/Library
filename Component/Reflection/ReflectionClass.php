@@ -65,7 +65,7 @@
         
 
 
-        public static function inParameters(string $class_name, string $method_name, string $parameters_name)
+        public static function inParameters(string $class_name, string $method_name, string $parameters_name): bool
         {
             return in_array($parameters_name, self::getParameters($class_name, $method_name) ?? []);
         }
