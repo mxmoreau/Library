@@ -20,6 +20,8 @@
         private static string $hosts;
         private static string $path;
         private static string $query;
+        private static array $query_all;
+        private static int $query_all_count;
         private static bool $is_limit;
         private static array $dump;
 
@@ -62,7 +64,7 @@
 
         public static function scheme_isSecure(): bool
         {
-            return self::$scheme_isSecure ??= self::scheme() === "https";
+            return self::$scheme_isSecure ??= self::scheme() === 'https';
         }
 
 
@@ -103,7 +105,21 @@
         }
 
 
+        
+        public static function query_all(): array
+        {
+            return self::$query_all ??= $_GET;
+        }
 
+
+
+        public static function query_all_count(): int
+        {
+            return self::$query_all_count ??= count(self::query_all());
+        }
+        
+
+        
         public static function isLimit(): bool
         {
             return self::$is_limit ??= mb_strlen(self::uri()) > 256;
@@ -125,6 +141,8 @@
                 'HOSTS' => self::hosts(),
                 'PATH' => self::path(),
                 'QUERY' => self::query(),
+                'QUERY_ALL' => self::query_all(),
+                'QUERY_ALL_COUNT' => self::query_all_count(),
                 'IS_LIMIT' => self::isLimit(),
                 'IS_LIMIT_SIZE' => 256,
                 'GENERATED_AT' => date('Y-m-d H:i:s')
