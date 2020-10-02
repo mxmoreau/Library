@@ -15,6 +15,7 @@
         private static string $client_port;
         private static array $client_browsers;
         private static string $client_time;
+        private static string $client_time_float;
         private static string $client_time_date;
 
 
@@ -35,23 +36,28 @@
 
         public static function browser(): array
         {
-            // get_browser() => https://browscap.org/ .ini
-
-            return self::$client_browsers ??= get_browser(null, true);
+            return self::$client_browsers ??= \get_browser(null, 1);
         }
 
 
 
         public static function time(): string
         {
-            return self::$client_time ??= $_SERVER['REQUEST_TIME_FLOAT'];
+            return self::$client_time ??= $_SERVER['REQUEST_TIME'];
+        }
+
+
+
+        public static function time_float(): string
+        {
+            return self::$client_time_float ??= $_SERVER['REQUEST_TIME_FLOAT'];
         }
 
 
 
         public static function time_date(): string
         {
-            return self::$client_time_date ??= \date('Y/m/d H:i:s', self::time());
+            return self::$client_time_date ??= \date('Y/m/d H:i:s', self::time_float());
         }
     }
 ?>
