@@ -11,32 +11,47 @@
 
     class BodyRequest
     {
-        private static array $form;
-        private static string $form_raw;
+        private static string $client_ip;
+        private static string $client_port;
+        private static array $client_browsers;
+        private static string $client_time;
+        private static string $client_time_date;
 
 
-        public static function form(): array
+
+        public static function ip(): string
         {
-            return self::$form ??= $_POST;
+            return self::$client_ip ??= $_SERVER['REMOTE_ADDR'];
         }
 
 
 
-        public static function form_raw(): ?string
+        public static function port(): string
         {
-            /*
-                Does not work with enctype="multipart/form-data" in the <form> tag.
-                To make it work do this: <form action="/" method="POST">
-            */
-
-            return self::$form_raw ??= file_get_contents('php://input');
+            return self::$client_port ??= $_SERVER['REMOTE_PORT'];
         }
 
 
 
-        public static function input(string $field_name): ?string
+        public static function browser(): array
         {
-            return $_POST[$field_name] ?? NULL;
+            // get_browser() => https://browscap.org/ .ini
+
+            return self::$client_browsers ??= get_browser(null, true);
+        }
+
+
+
+        public static function time(): string
+        {
+            return self::$client_time ??= $_SERVER['REQUEST_TIME_FLOAT'];
+        }
+
+
+
+        public static function time_date(): string
+        {
+            return self::$client_time_date ??= \date('Y/m/d H:i:s', self::time());
         }
     }
 ?>
