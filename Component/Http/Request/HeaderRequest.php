@@ -15,6 +15,7 @@
         private static array $values;
         private static bool $is_limit;
         private static int $count;
+        private static array $encoding;
 
 
         public static function headers(): array
@@ -55,6 +56,13 @@
         public static function count(): int
         {
             return self::$count ??= count(self::headers());
+        }
+
+
+
+        public static function encodings(): array
+        {
+            return self::$encoding ??= array_map('trim', explode(',', $_SERVER['HTTP_ACCEPT_ENCODING']));
         }
 
 
