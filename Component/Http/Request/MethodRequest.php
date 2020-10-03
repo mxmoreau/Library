@@ -9,7 +9,7 @@
 
     namespace Library\Component\Http\Request;
 
-    class MethodRequest
+    final class MethodRequest
     {
         const METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'TRACE', 'CONNECT', 'OPTIONS'];
 
