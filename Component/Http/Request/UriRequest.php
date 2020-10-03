@@ -1,13 +1,15 @@
 <?php 
 
     /**
+     * A set of functions that manage the uri of the request
+     *
      * @author Maxime Moreau
      * @version 1.0.0
      */
 
     namespace Library\Component\Http\Request;
 
-    class UriRequest
+    final class UriRequest
     {
         private static string $uri;
         private static string $full;
