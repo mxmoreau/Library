@@ -9,7 +9,7 @@
   
     namespace Library\Component\Http\Request;
 
-    class BodyRequest
+    final class BodyRequest
     {
         private static array $form;
         private static string $form_raw;
